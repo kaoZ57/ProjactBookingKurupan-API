@@ -29,8 +29,5 @@ Route::post('/postItems', [ItemsController::class, 'postItems']);
 //UPDATE
 Route::put('/updateItems', [ItemsController::class, 'updateItems']);
 
-
-
-
 //DALETE
 Route::delete('/deleteItems/{id}', [ItemsController::class, 'deleteItem']);
