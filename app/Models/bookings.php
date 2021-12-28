@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class items_type extends Model
+class bookings extends Model
 {
     use HasFactory;
-    public $table = 'items_type';
+    use HasFactory;
+    public $table = 'bookings';
     public $timestamps = true;
     protected $fillable = [
         'id',
