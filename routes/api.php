@@ -18,16 +18,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//GET ITEM
-Route::get('/getItems', [ItemsController::class, 'getItems']);
+//ITEM
+Route::get('/getItems', [ItemsController::class, 'get']);
+Route::get('/getItems/{id}', [ItemsController::class, 'getID']);
+Route::post('/postItems', [ItemsController::class, 'post']);
+Route::put('/updateItems', [ItemsController::class, 'update']);
+Route::delete('/deleteItems/{id}', [ItemsController::class, 'delete']);
 
-Route::get('/getItems/{id}', [ItemsController::class, 'getItemsID']);
-
-//POST ITEM
-Route::post('/postItems', [ItemsController::class, 'postItems']);
-
-//UPDATE
-Route::put('/updateItems', [ItemsController::class, 'updateItems']);
-
-//DALETE
-Route::delete('/deleteItems/{id}', [ItemsController::class, 'deleteItem']);
+//BOOKING
+Route::get('/getBooking', [ItemsController::class, 'get']);
+Route::post('/postBooking', [ItemsController::class, 'post']);

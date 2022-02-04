@@ -16,5 +16,6 @@ class items extends Model
         'item_type_id',
         'description',
         'is_active',
+        'quantity',
     ];
 }

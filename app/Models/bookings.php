@@ -12,7 +12,10 @@ class bookings extends Model
     public $table = 'bookings';
     public $timestamps = true;
     protected $fillable = [
-        'id',
-        'name',
+        'user_id',
+        'booking_item_id',
+        'booking_status',
+        'start_date',
+        'end_date',
     ];
 }
