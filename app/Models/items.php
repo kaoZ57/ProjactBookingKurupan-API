@@ -18,4 +18,9 @@ class items extends Model
         'is_active',
         'quantity',
     ];
+
+    public function itemsType()
+    {
+        return $this->belongsTo(items_type::class, 'item_type_id', 'id');
+    }
 }
