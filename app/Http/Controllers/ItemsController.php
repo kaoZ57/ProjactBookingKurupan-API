@@ -4,23 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\items;
-use App\Models\items_type;
+use Illuminate\Support\Facades\DB;
 
 class ItemsController extends Controller
 {
     //GET
     public function get()
     {
-        $item = items::all();
-        // $items_type = items_type::all();
-        // $data = items::with('items_type')->where('item_type_id', '=', 2)->latest('id')->get();
-        //$data = items::with('items_type')->latest('id')->get();
+        $itemdata = DB::table('items')
+            ->select('items.*', 'items_types.name as typename')
+            ->join('items_types', 'items.item_type_id', '=', 'items_types.id')
+            ->get();
 
-        if ($item) {
+        if ($itemdata) {
             return response()->json([
                 'message' => 'view items For you Success !',
-                'item' => $item,
-                // 'items_type' => $items_type
+                'item' => $itemdata
             ], 200);
         } else {
             return response()->json(['message' => 'items not found !'], 404);
@@ -30,12 +29,16 @@ class ItemsController extends Controller
     //GET_ID
     public function getID($id)
     {
-        $item_id = items::find($id);
+        $itemdata = DB::table('items')
+            ->select('items.*', 'items_types.name as typename')
+            ->join('items_types', 'items.item_type_id', '=', 'items_types.id')
+            ->where('items.id', '=', $id)
+            ->get();
 
-        if ($item_id) {
+        if ($itemdata) {
             return response()->json([
                 'message' => 'view items For you Success !',
-                'item' => $item_id
+                'item' => $itemdata
             ], 200);
         } else {
             return response()->json(['message' => 'items not found !'], 404);

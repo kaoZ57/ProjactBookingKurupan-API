@@ -23,4 +23,9 @@ class items extends Model
     {
         return $this->belongsTo(items_type::class, 'item_type_id', 'id');
     }
+
+    public function note_item()
+    {
+        return $this->belongsTo(note_item::class, 'id', 'item_id');
+    }
 }

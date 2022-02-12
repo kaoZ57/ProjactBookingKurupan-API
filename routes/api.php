@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ItemTypeController;
+use App\Http\Controllers\NoteItemController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,12 +28,19 @@ Route::post('postItems', [ItemsController::class, 'post']);
 Route::put('updateItems', [ItemsController::class, 'update']);
 Route::delete('deleteItems/{id}', [ItemsController::class, 'delete']);
 
-//ITEMTYPE
+//ITEM_TYPE
 Route::get('getItemsType', [ItemTypeController::class, 'get']);
 Route::get('getItemsType/{id}', [ItemsController::class, 'getID']);
 Route::post('postItemsType', [ItemTypeController::class, 'post']);
 Route::put('updateItemsType', [ItemTypeController::class, 'update']);
 Route::delete('deleteItemsType/{id}', [ItemTypeController::class, 'delete']);
+
+//NOTE_ITEM
+Route::get('getNote', [NoteItemController::class, 'get']);
+Route::get('getNote/{id}', [NoteItemController::class, 'getID']);
+Route::post('postNote', [NoteItemController::class, 'post']);
+Route::put('updateNote', [NoteItemController::class, 'update']);
+Route::delete('deleteNote/{id}', [NoteItemController::class, 'delete']);
 
 //BOOKING
 Route::get('getBooking', [ItemsController::class, 'get']);
