@@ -6,7 +6,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ItemTypeController;
 use App\Http\Controllers\NoteItemController;
-use App\Http\Controllers\GoogleSocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +27,12 @@ use App\Http\Controllers\GoogleSocialiteController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+//Protected route
 Route::group(['middleware' => ['web']], function () {
-    Route::get('auth/callback/google', [GoogleSocialiteController::class, 'handleCallback']);
+    Route::get('login/google', [AuthController::class, 'redirectToProvider']);
+    Route::get('login/google/callback', [AuthController::class, 'handleProviderCallback']);
 });
 
-//Protected route
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);

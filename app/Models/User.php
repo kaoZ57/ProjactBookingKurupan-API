@@ -21,8 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'social_id',
-        'social_type'
+        // 'social_id',
+        // 'social_type'
     ];
 
     /**
@@ -49,4 +49,9 @@ class User extends Authenticatable
     // protected $appends = [
     //     'profile_photo_url',
     // ];
+
+    public function providers()
+    {
+        return $this->hasMany(Provider::class, 'user_id', 'id');
+    }
 }
