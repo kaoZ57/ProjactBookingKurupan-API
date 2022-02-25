@@ -18,4 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('auth/google', [GoogleSocialiteController::class, 'redirectToGoogle']);
-Route::get('auth/callback/google', [GoogleSocialiteController::class, 'handleCallback']);
+// Route::get('auth/callback/google', [GoogleSocialiteController::class, 'handleCallback']);

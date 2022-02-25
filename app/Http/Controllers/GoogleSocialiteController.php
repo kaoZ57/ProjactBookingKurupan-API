@@ -33,7 +33,6 @@ class GoogleSocialiteController extends Controller
         try {
 
             $user = Socialite::driver('google')->user();
-            // dd($user->id);
 
             $finduser = User::where('social_id', $user->id)->first();
 
@@ -48,7 +47,8 @@ class GoogleSocialiteController extends Controller
                     'token' => $token
                 ];
 
-                return response($response, 201);
+                // return response($response, 201);
+                return dd($response, 201);
                 // return redirect('/dashboard');
             } else {
                 $newUser = User::create([
@@ -68,7 +68,8 @@ class GoogleSocialiteController extends Controller
                     'token' => $token
                 ];
 
-                return response($response, 201);
+                // return response($response, 201);
+                return dd($response, 201);
                 // return redirect('/dashboard');
             }
         } catch (Exception $e) {
