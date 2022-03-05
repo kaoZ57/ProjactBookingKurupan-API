@@ -29,17 +29,13 @@ Route::post('login', [AuthController::class, 'login']);
 
 //Protected route
 Route::group(['middleware' => ['web']], function () {
-    Route::get('login/google', [AuthController::class, 'redirectToProvider']);
-    Route::get('login/google/callback', [AuthController::class, 'handleProviderCallback']);
+    Route::get('/login/google', [AuthController::class, 'redirectToProvider']);
+    Route::get('/login/google/callback', [AuthController::class, 'handleProviderCallback']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
-
-    Route::get('test', ['', function () {
-        return 'Test';
-    }]);
 
     //ITEM
     Route::get('getItems', [ItemsController::class, 'get']);

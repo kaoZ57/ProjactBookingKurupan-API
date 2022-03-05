@@ -16,6 +16,3 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('auth/google', [AuthController::class, 'redirectToProvider']);
-// Route::get('auth/callback/google', [GoogleSocialiteController::class, 'handleCallback']);

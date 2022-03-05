@@ -11,38 +11,47 @@ class ItemsController extends Controller
     //GET
     public function get()
     {
-        $itemdata = DB::table('items')
-            ->select('items.*', 'items_types.name as typename')
-            ->join('items_types', 'items.item_type_id', '=', 'items_types.id')
-            ->get();
+        // $itemdata = DB::table('items')
+        //     ->select('items.*', 'items_types.name as typename')
+        //     ->join('items_types', 'items.item_type_id', '=', 'items_types.id')
+        //     ->get();
 
-        if ($itemdata) {
-            return response()->json([
-                'message' => 'view items For you Success !',
-                'item' => $itemdata
-            ], 200);
-        } else {
-            return response()->json(['message' => 'items not found !'], 404);
-        }
+        // if ($itemdata) {
+        //     return response()->json([
+        //         'message' => 'view items For you Success !',
+        //         'item' => $itemdata
+        //     ], 200);
+        // } else {
+        //     return response()->json(['message' => 'items not found !'], 404);
+        // }
+
+        return response()->json([
+            'message' => 'view items For you Success !',
+            'item' => items::all()
+        ], 200);
     }
 
     //GET_ID
     public function getID($id)
     {
-        $itemdata = DB::table('items')
-            ->select('items.*', 'items_types.name as typename')
-            ->join('items_types', 'items.item_type_id', '=', 'items_types.id')
-            ->where('items.id', '=', $id)
-            ->get();
+        // $itemdata = DB::table('items')
+        //     ->select('items.*', 'items_types.name as typename')
+        //     ->join('items_types', 'items.item_type_id', '=', 'items_types.id')
+        //     ->where('items.id', '=', $id)
+        //     ->get();
 
-        if ($itemdata) {
-            return response()->json([
-                'message' => 'view items For you Success !',
-                'item' => $itemdata
-            ], 200);
-        } else {
-            return response()->json(['message' => 'items not found !'], 404);
-        }
+        // if ($itemdata) {
+        //     return response()->json([
+        //         'message' => 'view items For you Success !',
+        //         'item' => $itemdata
+        //     ], 200);
+        // } else {
+        //     return response()->json(['message' => 'items not found !'], 404);
+        // }
+        return response()->json([
+            'message' => 'view items For you Success !',
+            'item' =>  items::find($id)
+        ], 200);
     }
 
     //POST

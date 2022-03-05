@@ -11,6 +11,7 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Models\Provider;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -39,14 +40,6 @@ class AuthController extends Controller
         return response($response, 201);
     }
 
-    //Logout
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-
-        return ['massage' => 'logout'];
-    }
-
     //Login
     public function login(Request $request)
     {
@@ -72,6 +65,14 @@ class AuthController extends Controller
         }
     }
 
+    //Logout
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return ['massage' => 'logout'];
+    }
+
     //Redirect_Google    
     public function redirectToProvider()
     {
@@ -87,47 +88,61 @@ class AuthController extends Controller
     //Callback_Google   
     public function handleProviderCallback()
     {
-        $user = Socialite::driver('google')->user();
+        try {
 
-        $finduser = User::where('email', $user->getEmail())->first();
+            $user = Socialite::driver('google')->user();
+            $finduser = User::where('email', $user->getEmail())->first();
+            $finduser = Provider::where('provider_id', $user->id)->first();
 
-        if ($finduser) {
+            if ($finduser) {
 
-            $finduser->tokens()->delete();
-            $token = $finduser->createToken('token-name')->plainTextToken;
+                $user = User::where('email', $user->getEmail())->first();
+                $user->tokens()->delete();
+                $token = $user->createToken('token-google')->plainTextToken;
 
-            $response = [
-                'user' => $user,
-                'token' => $token
-            ];
+                $response = [
+                    'user' => $user,
+                    'token' => $token
+                ];
 
-            return response($response, 201);
-            // return response()->json($finduser, 200, ['Access-Token' => $token]);
-        } else {
-            $userCreated = User::firstOrCreate(
-                [
-                    'email' => $user->getEmail(),
-                    'password' => encrypt('my-google')
-                ],
-                [
-                    'email_verified_at' => now(),
-                    'name' => $user->getName(),
-                    'status' => true,
-                ]
-            );
-            $userCreated->providers()->updateOrCreate(
-                [
-                    'provider' => 'google',
-                    'provider_id' => $user->getId(),
-                ],
-                [
-                    'avatar' => $user->getAvatar()
-                ]
-            );
+                return response($response, 201);
+            } else {
+                $userCreated = User::firstOrCreate(
+                    [
+                        'email' => $user->getEmail(),
+                        'password' => encrypt('my-google')
+                    ],
+                    [
+                        'email_verified_at' => now(),
+                        'name' => $user->getName(),
+                        'status' => true,
+                    ]
+                );
+                $userCreated->providers()->updateOrCreate(
+                    [
+                        'provider' => 'google',
+                        'provider_id' => $user->getId(),
+                    ],
+                    [
+                        'avatar' => $user->getAvatar()
+                    ]
+                );
 
-            $token = $userCreated->createToken('token-name')->plainTextToken;
+                $token = $userCreated->createToken('token-google')->plainTextToken;
 
-            return response()->json($userCreated, 200, ['Access-Token' => $token]);
+                $response = [
+                    'user' => $userCreated,
+                    'token' => $token
+                ];
+
+
+                return response($response, 201);
+            }
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Invalid credentials provided.',
+                'Exception' => $e
+            ], 422);
         }
     }
 }
